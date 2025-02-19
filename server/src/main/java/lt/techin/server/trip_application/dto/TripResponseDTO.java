@@ -1,4 +1,4 @@
-package lt.techin.server.store_application.dto;
+package lt.techin.server.trip_application.dto;
 
 public record TripResponseDTO(String name) {
 }

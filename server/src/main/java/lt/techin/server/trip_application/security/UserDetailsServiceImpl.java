@@ -1,7 +1,7 @@
-package lt.techin.server.store_application.security;
+package lt.techin.server.trip_application.security;
 
-import lt.techin.server.store_application.model.User;
-import lt.techin.server.store_application.service.UserService;
+import lt.techin.server.trip_application.model.User;
+import lt.techin.server.trip_application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

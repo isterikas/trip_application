@@ -1,6 +1,6 @@
-package lt.techin.server.store_application.repository;
+package lt.techin.server.trip_application.repository;
 
-import lt.techin.server.store_application.model.Date;
+import lt.techin.server.trip_application.model.Date;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;

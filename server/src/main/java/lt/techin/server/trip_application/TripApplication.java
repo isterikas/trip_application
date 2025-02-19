@@ -1,13 +1,13 @@
-package lt.techin.server.store_application;
+package lt.techin.server.trip_application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StoreApplication {
+public class TripApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(StoreApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(TripApplication.class, args);
+  }
 
 }

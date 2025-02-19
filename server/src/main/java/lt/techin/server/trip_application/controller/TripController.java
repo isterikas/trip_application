@@ -1,14 +1,14 @@
-package lt.techin.server.store_application.controller;
+package lt.techin.server.trip_application.controller;
 
 import jakarta.validation.Valid;
-import lt.techin.server.store_application.dto.TripMapper;
-import lt.techin.server.store_application.dto.TripRequestDTO;
-import lt.techin.server.store_application.dto.TripResponseDTO;
-import lt.techin.server.store_application.model.Date;
-import lt.techin.server.store_application.model.Trip;
-import lt.techin.server.store_application.model.TripDate;
-import lt.techin.server.store_application.service.DateService;
-import lt.techin.server.store_application.service.TripService;
+import lt.techin.server.trip_application.dto.TripMapper;
+import lt.techin.server.trip_application.dto.TripRequestDTO;
+import lt.techin.server.trip_application.dto.TripResponseDTO;
+import lt.techin.server.trip_application.model.Date;
+import lt.techin.server.trip_application.model.Trip;
+import lt.techin.server.trip_application.model.TripDate;
+import lt.techin.server.trip_application.service.DateService;
+import lt.techin.server.trip_application.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

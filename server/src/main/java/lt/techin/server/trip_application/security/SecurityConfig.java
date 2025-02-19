@@ -1,4 +1,4 @@
-package lt.techin.server.store_application.security;
+package lt.techin.server.trip_application.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

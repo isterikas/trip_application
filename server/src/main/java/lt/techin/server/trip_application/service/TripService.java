@@ -1,8 +1,8 @@
-package lt.techin.server.store_application.service;
+package lt.techin.server.trip_application.service;
 
-import lt.techin.server.store_application.model.Trip;
-import lt.techin.server.store_application.repository.DateRepository;
-import lt.techin.server.store_application.repository.TripRepository;
+import lt.techin.server.trip_application.model.Trip;
+import lt.techin.server.trip_application.repository.DateRepository;
+import lt.techin.server.trip_application.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package lt.techin.server.store_application.model;
+package lt.techin.server.trip_application.model;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;

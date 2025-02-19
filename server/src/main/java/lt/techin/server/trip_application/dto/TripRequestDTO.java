@@ -1,8 +1,8 @@
-package lt.techin.server.store_application.dto;
+package lt.techin.server.trip_application.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lt.techin.server.store_application.model.Date;
-import lt.techin.server.store_application.model.TripDate;
+import lt.techin.server.trip_application.model.Date;
+import lt.techin.server.trip_application.model.TripDate;
 
 import java.math.BigDecimal;
 import java.util.List;

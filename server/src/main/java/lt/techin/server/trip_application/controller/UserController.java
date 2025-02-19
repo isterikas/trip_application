@@ -1,11 +1,11 @@
-package lt.techin.server.store_application.controller;
+package lt.techin.server.trip_application.controller;
 
 import jakarta.validation.Valid;
-import lt.techin.server.store_application.dto.UserMapper;
-import lt.techin.server.store_application.dto.UserRequestDTO;
-import lt.techin.server.store_application.model.Role;
-import lt.techin.server.store_application.model.User;
-import lt.techin.server.store_application.service.UserService;
+import lt.techin.server.trip_application.dto.UserMapper;
+import lt.techin.server.trip_application.dto.UserRequestDTO;
+import lt.techin.server.trip_application.model.Role;
+import lt.techin.server.trip_application.model.User;
+import lt.techin.server.trip_application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

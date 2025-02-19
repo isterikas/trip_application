@@ -1,6 +1,6 @@
-package lt.techin.server.store_application.dto;
+package lt.techin.server.trip_application.dto;
 
-import lt.techin.server.store_application.model.Trip;
+import lt.techin.server.trip_application.model.Trip;
 
 import java.util.List;
 

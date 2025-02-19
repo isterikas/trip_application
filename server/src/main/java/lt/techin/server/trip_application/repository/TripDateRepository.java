@@ -1,6 +1,6 @@
-package lt.techin.server.store_application.repository;
+package lt.techin.server.trip_application.repository;
 
-import lt.techin.server.store_application.model.TripDate;
+import lt.techin.server.trip_application.model.TripDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TripDateRepository extends JpaRepository<TripDate, Long> {
