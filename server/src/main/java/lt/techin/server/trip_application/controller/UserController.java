@@ -1,0 +1,50 @@
+package lt.techin.server.store_application.controller;
+
+import jakarta.validation.Valid;
+import lt.techin.server.store_application.dto.UserMapper;
+import lt.techin.server.store_application.dto.UserRequestDTO;
+import lt.techin.server.store_application.model.Role;
+import lt.techin.server.store_application.model.User;
+import lt.techin.server.store_application.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api")
+public class UserController {
+
+  private final UserService userService;
+  private final PasswordEncoder passwordEncoder;
+
+  @Autowired
+  public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    this.userService = userService;
+    this.passwordEncoder = passwordEncoder;
+  }
+
+  @PostMapping("/users")
+  public ResponseEntity<?> createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+    User user = new User();
+    user.setUsername(userRequestDTO.username());
+    user.setPassword(passwordEncoder.encode(userRequestDTO.password()));
+    user.setEmail(userRequestDTO.email());
+    user.setRoles(List.of(new Role(1)));
+    userService.saveUser(user);
+
+    return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(user.getId())
+                    .toUri())
+            .body(UserMapper.toUserResponseDTO(user));
+  }
+
+}
