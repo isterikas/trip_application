@@ -1,5 +1,5 @@
-function Loading(){
-    return <></>
+function Loading() {
+  return <></>;
 }
 
-export default Loading
+export default Loading;

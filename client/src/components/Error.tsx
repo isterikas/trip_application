@@ -1,5 +1,5 @@
-function Error(){
-    return <></>
+function Error() {
+  return <></>;
 }
 
-export default Error
+export default Error;

@@ -1,10 +1,9 @@
-function LoginForm(){
-    return <>
-    <input type="text" />
-    
-    
-    
+function LoginForm() {
+  return (
+    <>
+      <input type="text" />
     </>
+  );
 }
 
-export default LoginForm
+export default LoginForm;

@@ -1,6 +1,9 @@
-function AboutUs(){
-    return <>
-    <h1>hello</h1></>
+function AboutUs() {
+  return (
+    <>
+      <h1>hello</h1>
+    </>
+  );
 }
 
-export default AboutUs
+export default AboutUs;
