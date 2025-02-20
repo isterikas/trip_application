@@ -2,6 +2,8 @@ package lt.techin.server.trip_application.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "trips_dates")
 public class TripDate {
@@ -13,10 +15,14 @@ public class TripDate {
   private Trip trip;
   @ManyToOne
   private Date date;
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinColumn(name = "trip_date_id")
+  private List<UserTrip> userTrips;
 
   public TripDate(Trip trip, Date date) {
     this.trip = trip;
     this.date = date;
+    this.userTrips = List.of();
   }
 
   public TripDate() {
@@ -40,5 +46,13 @@ public class TripDate {
 
   public void setDate(Date date) {
     this.date = date;
+  }
+
+  public List<UserTrip> getUserTrips() {
+    return userTrips;
+  }
+
+  public void setUserTrips(List<UserTrip> userTrips) {
+    this.userTrips = userTrips;
   }
 }

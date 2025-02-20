@@ -16,9 +16,9 @@ public class Trip {
   private String image;
   private String duration;
   private BigDecimal price;
-  @OneToMany
-  @JoinColumn(name = "trip_id")
-  private List<UserTrip> userTrips;
+  //  @OneToMany
+//  @JoinColumn(name = "_id")
+//  private List<UserTrip> userTrips;
   @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name = "trip_id")
   private List<TripDate> tripDates;
@@ -29,7 +29,7 @@ public class Trip {
     this.image = image;
     this.duration = duration;
     this.price = price;
-    this.userTrips = List.of();
+//    this.userTrips = List.of();
   }
 
   public Trip() {
@@ -79,13 +79,13 @@ public class Trip {
     this.price = price;
   }
 
-  public List<UserTrip> getUserTrips() {
-    return userTrips;
-  }
-
-  public void setUserTrips(List<UserTrip> userTrips) {
-    this.userTrips = userTrips;
-  }
+//  public List<UserTrip> getUserTrips() {
+//    return userTrips;
+//  }
+//
+//  public void setUserTrips(List<UserTrip> userTrips) {
+//    this.userTrips = userTrips;
+//  }
 
   public List<TripDate> getTripDates() {
     return tripDates;

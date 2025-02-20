@@ -3,7 +3,7 @@ import Card from "./Card";
 function Items({ information, setUpdate, error }) {
   return (
     <>
-      {information.map((entry) => {
+      {information.map((entry: object) => {
         return (
           <>
             {!error && (

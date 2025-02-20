@@ -10,17 +10,17 @@ public class UserTrip {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   @ManyToOne
-  private Trip trip;
+  private TripDate tripDate;
   @ManyToOne
   private User user;
   private String comment;
   private int rating;
 
-  public UserTrip(Trip trip, User user, String comment, int rating) {
-    this.trip = trip;
+  public UserTrip(TripDate tripDate, User user) {
+    this.tripDate = tripDate;
     this.user = user;
-    this.comment = comment;
-    this.rating = rating;
+    this.comment = null;
+    this.rating = 0;
   }
 
   public UserTrip() {
@@ -30,12 +30,12 @@ public class UserTrip {
     return id;
   }
 
-  public Trip getTrip() {
-    return trip;
+  public TripDate getTripDate() {
+    return tripDate;
   }
 
-  public void setTrip(Trip trip) {
-    this.trip = trip;
+  public void setTripDate(TripDate tripDate) {
+    this.tripDate = tripDate;
   }
 
   public User getUser() {

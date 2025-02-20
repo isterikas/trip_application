@@ -20,16 +20,16 @@ public class User implements UserDetails {
   @JoinTable(name = "users_roles", joinColumns =
   @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   private List<Role> roles;
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "user_id")
-  private List<Trip> trips;
+  private List<UserTrip> userTrips;
 
   public User(String username, String password, String email, List<Role> roles) {
     this.username = username;
     this.password = password;
     this.email = email;
     this.roles = roles;
-    this.trips = List.of();
+    this.userTrips = List.of();
   }
 
   public User() {
@@ -63,12 +63,12 @@ public class User implements UserDetails {
     this.roles = roles;
   }
 
-  public List<Trip> getTrips() {
-    return trips;
+  public List<UserTrip> getUserTrips() {
+    return userTrips;
   }
 
-  public void setTrips(List<Trip> trips) {
-    this.trips = trips;
+  public void setUserTrips(List<UserTrip> userTrips) {
+    this.userTrips = userTrips;
   }
 
   @Override
