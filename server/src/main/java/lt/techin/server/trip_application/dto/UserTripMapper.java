@@ -11,7 +11,7 @@ public class UserTripMapper {
   }
 
   public static UserTripStatementDTO toUserTripStatementDTO(UserTrip userTrip) {
-    return new UserTripStatementDTO(userTrip.getTripDate().getTrip().getName(), userTrip.getTripDate().getDate(), userTrip.getComment() == null ? "Please comment on your experience" : userTrip.getComment(), userTrip.getRating() == 0 ? "Please rate the trip." : String.valueOf(userTrip.getRating()));
+    return new UserTripStatementDTO(userTrip.getTripDate().getTrip().getName(), userTrip.getTripDate().getDate(), userTrip.getComment() == null ? "Please comment on your experience" : userTrip.getComment(), userTrip.getRating() == 0 ? "Please rate the trip." : String.valueOf(userTrip.getRating()), userTrip.getStatus().name());
   }
 
   public static List<UserTripStatementDTO> toUserTripStatementDTOList(List<UserTrip> userTrips) {

@@ -15,6 +15,8 @@ public class UserTrip {
   private User user;
   private String comment;
   private int rating;
+  @Enumerated(EnumType.ORDINAL)
+  @Column(name = "status")
   private TripStatus status;
 
   public UserTrip(TripDate tripDate, User user) {
