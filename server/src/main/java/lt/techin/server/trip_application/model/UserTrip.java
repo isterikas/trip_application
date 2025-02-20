@@ -15,13 +15,16 @@ public class UserTrip {
   private User user;
   private String comment;
   private int rating;
+  private TripStatus status;
 
   public UserTrip(TripDate tripDate, User user) {
     this.tripDate = tripDate;
     this.user = user;
     this.comment = null;
     this.rating = 0;
+    this.status = TripStatus.PENDING;
   }
+
 
   public UserTrip() {
   }
@@ -60,5 +63,13 @@ public class UserTrip {
 
   public void setRating(int rating) {
     this.rating = rating;
+  }
+
+  public TripStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(TripStatus status) {
+    this.status = status;
   }
 }

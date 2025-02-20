@@ -20,10 +20,12 @@ public class SecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
             .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers(HttpMethod.POST, "/api/trips").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/events").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.DELETE, "/api/events/{eventId}").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET, "/api/events/{eventId}/participants").hasRole("ADMIN")
+                    .requestMatchers("/**").permitAll()
+//                    .requestMatchers(HttpMethod.POST, "/api/trips").permitAll()
+//                    .requestMatchers(HttpMethod.GET, "/api/trips/my").hasRole("USER")
+//                    .requestMatchers(HttpMethod.POST, "/api/events").hasRole("ADMIN")
+//                    .requestMatchers(HttpMethod.DELETE, "/api/events/{eventId}").hasRole("ADMIN")
+//                    .requestMatchers(HttpMethod.GET, "/api/events/{eventId}/participants").hasRole("ADMIN")
                     .anyRequest().permitAll())
             .csrf(c -> c.disable())
             .httpBasic(Customizer.withDefaults());

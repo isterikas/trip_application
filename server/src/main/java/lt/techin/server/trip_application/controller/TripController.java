@@ -75,12 +75,12 @@ public class TripController {
     if (!date.isEmpty()) {
 
       if (name.isEmpty()) {
-        return ResponseEntity.status(HttpStatus.OK).body(tripService.findByDate(date).stream().map(trip -> TripMapper.toTripResponseDTO(trip)).toList());
+        return ResponseEntity.status(HttpStatus.OK).body(tripService.findByDate(date).stream().map(TripMapper::toTripResponseDTO).toList());
       } else {
         return ResponseEntity.status(HttpStatus.OK).body(TripMapper.toTripResponseDTOList(tripService.findByNameAndDate(name, date)));
       }
     }
-    return ResponseEntity.status(HttpStatus.OK).body(tripService.findByNameContains(name).stream().map(trip -> TripMapper.toTripResponseDTO(trip)).toList());
+    return ResponseEntity.status(HttpStatus.OK).body(tripService.findByNameContains(name).stream().map(TripMapper::toTripResponseDTO).toList());
 
   }
 
@@ -111,7 +111,7 @@ public class TripController {
   }
 
   @PostMapping("/{tripId}/{tripDateId}/register")
-  public ResponseEntity<UserTripRegistrationDTO> registrateForTrip(@PathVariable long tripId, @PathVariable long tripDateId, Authentication authentication) {
+  public ResponseEntity<UserTripRegistrationDTO> registerForTrip(@PathVariable long tripId, @PathVariable long tripDateId, Authentication authentication) {
     if (tripService.findTripById(tripId).isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
@@ -176,6 +176,19 @@ public class TripController {
       return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+  }
+
+  @PutMapping("/{userTripId}/status")
+  public ResponseEntity<RateTripResponseDTO> changeStatus(@PathVariable long userTripId, @RequestBody RateTripRequestDTO rateTripRequestDTO) {
+    if (!userTripService.existsById(userTripId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    UserTrip userTrip = userTripService.findUserTripById(userTripId).get();
+
+    userTrip.setRating(rateTripRequestDTO.rating());
+    userTrip.setComment(rateTripRequestDTO.comment());
+    userTripService.save(userTrip);
+    return ResponseEntity.status(HttpStatus.OK).body(UserTripMapper.toRateTripResponseDTO(userTrip));
   }
 
 }
