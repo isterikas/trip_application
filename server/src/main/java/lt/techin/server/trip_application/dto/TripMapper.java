@@ -14,4 +14,5 @@ public class TripMapper {
     return trips.stream().map(TripMapper::toTripResponseDTO).toList();
   }
 
+
 }

@@ -3,6 +3,7 @@ package lt.techin.server.trip_application.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,20 +17,16 @@ public class Trip {
   private String image;
   private String duration;
   private BigDecimal price;
-  //  @OneToMany
-//  @JoinColumn(name = "_id")
-//  private List<UserTrip> userTrips;
-  @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "trip_id")
+  @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<TripDate> tripDates;
 
-  public Trip(String name, String category, String image, String duration, BigDecimal price, List<TripDate> tripDates) {
+  public Trip(String name, String category, String image, String duration, BigDecimal price) {
     this.name = name;
     this.category = category;
     this.image = image;
     this.duration = duration;
     this.price = price;
-//    this.userTrips = List.of();
+    this.tripDates = List.of();
   }
 
   public Trip() {
@@ -78,14 +75,6 @@ public class Trip {
   public void setPrice(BigDecimal price) {
     this.price = price;
   }
-
-//  public List<UserTrip> getUserTrips() {
-//    return userTrips;
-//  }
-//
-//  public void setUserTrips(List<UserTrip> userTrips) {
-//    this.userTrips = userTrips;
-//  }
 
   public List<TripDate> getTripDates() {
     return tripDates;

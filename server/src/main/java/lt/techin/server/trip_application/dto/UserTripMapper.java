@@ -7,16 +7,18 @@ import java.util.List;
 public class UserTripMapper {
 
   public static UserTripRegistrationDTO toUserTripResponseDTO(UserTrip userTrip) {
-    return new UserTripRegistrationDTO(userTrip.getTripDate().getDate().getDate(), userTrip.getTripDate().getTrip().getName(), userTrip.getTripDate().getTrip().getPrice(), "Registration successful.");
+    return new UserTripRegistrationDTO(userTrip.getTripDate().getDate(), userTrip.getTripDate().getTrip().getName(), userTrip.getTripDate().getTrip().getPrice(), "Registration successful.");
   }
 
   public static UserTripStatementDTO toUserTripStatementDTO(UserTrip userTrip) {
-    return new UserTripStatementDTO(userTrip.getTripDate().getTrip().getName(), userTrip.getTripDate().getDate().getDate(), userTrip.getComment() == null ? "Please comment on your experience" : userTrip.getComment(), userTrip.getRating() == 0 ? "Please rate the trip." : String.valueOf(userTrip.getRating()));
+    return new UserTripStatementDTO(userTrip.getTripDate().getTrip().getName(), userTrip.getTripDate().getDate(), userTrip.getComment() == null ? "Please comment on your experience" : userTrip.getComment(), userTrip.getRating() == 0 ? "Please rate the trip." : String.valueOf(userTrip.getRating()));
   }
 
   public static List<UserTripStatementDTO> toUserTripStatementDTOList(List<UserTrip> userTrips) {
     return userTrips.stream().map(UserTripMapper::toUserTripStatementDTO).toList();
   }
 
-
+  public static RateTripResponseDTO toRateTripResponseDTO(UserTrip userTrip) {
+    return new RateTripResponseDTO(userTrip.getTripDate().getTrip().getName(), userTrip.getTripDate().getDate(), userTrip.getComment(), userTrip.getRating());
+  }
 }

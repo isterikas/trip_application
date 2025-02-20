@@ -1,10 +1,10 @@
 package lt.techin.server.trip_application.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lt.techin.server.trip_application.model.Date;
 import lt.techin.server.trip_application.model.TripDate;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public record TripRequestDTO(String name,
@@ -13,5 +13,5 @@ public record TripRequestDTO(String name,
                              String duration,
                              double price,
                              @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-                             List<Date> dates) {
+                             List<LocalDate> dates) {
 }

@@ -2,6 +2,7 @@ package lt.techin.server.trip_application.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -13,13 +14,12 @@ public class TripDate {
   private long id;
   @ManyToOne
   private Trip trip;
-  @ManyToOne
-  private Date date;
+  private LocalDate date;
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "trip_date_id")
   private List<UserTrip> userTrips;
 
-  public TripDate(Trip trip, Date date) {
+  public TripDate(Trip trip, LocalDate date) {
     this.trip = trip;
     this.date = date;
     this.userTrips = List.of();
@@ -40,11 +40,11 @@ public class TripDate {
     this.trip = trip;
   }
 
-  public Date getDate() {
+  public LocalDate getDate() {
     return date;
   }
 
-  public void setDate(Date date) {
+  public void setDate(LocalDate date) {
     this.date = date;
   }
 

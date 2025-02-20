@@ -1,7 +1,6 @@
 package lt.techin.server.trip_application.service;
 
 import lt.techin.server.trip_application.model.Trip;
-import lt.techin.server.trip_application.repository.DateRepository;
 import lt.techin.server.trip_application.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,7 @@ public class TripService {
   private final TripRepository tripRepository;
 
   @Autowired
-  public TripService(TripRepository tripRepository, DateRepository dateRepository) {
+  public TripService(TripRepository tripRepository) {
     this.tripRepository = tripRepository;
   }
 

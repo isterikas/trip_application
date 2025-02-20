@@ -3,7 +3,6 @@ package lt.techin.server.trip_application.controller;
 import jakarta.validation.Valid;
 import lt.techin.server.trip_application.dto.*;
 import lt.techin.server.trip_application.model.*;
-import lt.techin.server.trip_application.service.DateService;
 import lt.techin.server.trip_application.service.TripDateService;
 import lt.techin.server.trip_application.service.TripService;
 import lt.techin.server.trip_application.service.UserTripService;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,14 +25,12 @@ public class TripController {
 
   private final TripService tripService;
   private final UserTripService userTripService;
-  private final DateService dateService;
   private final TripDateService tripDateService;
 
   @Autowired
-  public TripController(TripService tripService, UserTripService userTripService, DateService dateService, TripDateService tripDateService) {
+  public TripController(TripService tripService, UserTripService userTripService, TripDateService tripDateService) {
     this.tripService = tripService;
     this.userTripService = userTripService;
-    this.dateService = dateService;
     this.tripDateService = tripDateService;
   }
 
@@ -44,22 +42,22 @@ public class TripController {
     trip.setImage(tripRequestDTO.image());
     trip.setDuration(tripRequestDTO.duration());
     trip.setPrice(BigDecimal.valueOf(tripRequestDTO.price()));
-
-    List<Date> tripDates = new ArrayList<>();
+    tripService.saveTrip(trip);
+    ArrayList<TripDate> tripDates = new ArrayList<>();
 
     tripRequestDTO.dates().forEach(date -> {
-      if (!dateService.existsByDate(date.getDate())) {
-        Date newDate = new Date();
-        newDate.setDate(date.getDate());
-        dateService.saveDate(newDate);
-
+      if (!tripDateService.existsByIdAndDate(trip.getId(), date)) {
+        TripDate newDate = new TripDate();
+        newDate.setTrip(trip);
+        newDate.setDate(date);
+        tripDateService.saveTripDate(newDate);
         tripDates.add(newDate);
       } else {
-        tripDates.add(dateService.findDateByDate(date.getDate()));
+        tripDates.add(tripDateService.findDateByIdAndDate(trip.getId(), date));
       }
     });
 
-    trip.setTripDates(tripDates.stream().map(date -> new TripDate(trip, date)).toList());
+    trip.setTripDates(tripDates);
     tripService.saveTrip(trip);
 
     return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(trip.getId()).toUri()).body(TripMapper.toTripResponseDTO(trip));
@@ -106,7 +104,7 @@ public class TripController {
     updateTrip.get().setImage(tripRequestDTO.image() == null ? updateTrip.get().getImage() : tripRequestDTO.image());
     updateTrip.get().setDuration(tripRequestDTO.duration() == null ? updateTrip.get().getDuration() : tripRequestDTO.duration());
     updateTrip.get().setPrice(tripRequestDTO.price() == 0 ? updateTrip.get().getPrice() : BigDecimal.valueOf(tripRequestDTO.price()));
-    updateTrip.get().setTripDates(tripRequestDTO.dates() == null ? updateTrip.get().getTripDates() : tripRequestDTO.dates().stream().map(date -> new TripDate(updateTrip.get(), date)).toList());
+    updateTrip.get().setTripDates(tripRequestDTO.dates() == null ? updateTrip.get().getTripDates() : new ArrayList<>(tripRequestDTO.dates().stream().map(date -> new TripDate(updateTrip.get(), date)).toList()));
 
     tripService.saveTrip(updateTrip.get());
     return ResponseEntity.status(HttpStatus.OK).body(TripMapper.toTripResponseDTO(updateTrip.get()));
@@ -137,6 +135,34 @@ public class TripController {
     List<UserTrip> myTrips = userTripService.findAll().stream().filter(userTrip -> userTrip.getUser().getId() == user.getId()).toList();
     return ResponseEntity.status(HttpStatus.OK).body(UserTripMapper.toUserTripStatementDTOList(myTrips));
   }
+
+  @PutMapping("/my/{userTripId}")
+  public ResponseEntity<UserTripStatementDTO> changeDate(@PathVariable long userTripId, @RequestBody ChangeDateRequestDTO changeDateRequestDTO) {
+    if (!userTripService.existsById(userTripId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    LocalDate date = LocalDate.parse(changeDateRequestDTO.date());
+    UserTrip userTrip = userTripService.findUserTripById(userTripId).get();
+
+    TripDate desiredDate = userTripService.findUserTripById(userTripId).get().getTripDate().getTrip().getTripDates().stream().filter(tripDate -> tripDate.getDate().equals(date)).findFirst().get();
+    userTrip.setTripDate(desiredDate);
+    userTripService.save(userTrip);
+    return ResponseEntity.status(HttpStatus.OK).body(UserTripMapper.toUserTripStatementDTO(userTrip));
+  }
+
+  @PutMapping("/my/{userTripId}/rate")
+  public ResponseEntity<RateTripResponseDTO> leaveFeedback(@PathVariable long userTripId, @RequestBody RateTripRequestDTO rateTripRequestDTO) {
+    if (!userTripService.existsById(userTripId)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    UserTrip userTrip = userTripService.findUserTripById(userTripId).get();
+
+    userTrip.setRating(rateTripRequestDTO.rating());
+    userTrip.setComment(rateTripRequestDTO.comment());
+    userTripService.save(userTrip);
+    return ResponseEntity.status(HttpStatus.OK).body(UserTripMapper.toRateTripResponseDTO(userTrip));
+  }
+
 
   @DeleteMapping("/my/{userTripId}")
   public ResponseEntity<Void> deleteRegistration(@PathVariable long userTripId, Authentication authentication) {
