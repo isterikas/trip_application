@@ -1,13 +1,13 @@
 import axios from "axios";
 import { URL } from "./constants";
 
-export const postData = async (data): Promise<object[]> => {
+export const postData = async (data : object): Promise<object[]> => {
   const response = await axios.post(URL, data);
 
   return response.data;
 };
 
-export const postImage = async (data) => {
+export const postImage = async (data : object) => {
   const reponse = await axios.post(URL, data);
   return reponse.data;
 };

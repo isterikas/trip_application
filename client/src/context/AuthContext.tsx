@@ -1,6 +1,6 @@
 import {createContext, useContext, useState} from "react";
 import { useNavigate } from "react-router";
-import api, { setAuth, clearAuth } from "../utils/api.js";
+import api, { setAuth, clearAuth } from "../utils/api.ts";
 
 
 const AuthContext = createContext({
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
         navigate("/books");
     };
 
-    const register = async (username, password) => {
+    const registerUser = async (username, password) => {
         await api.post("/auth/register", { username, password });
         navigate("/login");
     };
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         // Paduodas sukurtas funkcijas, tam kad jas būtų galima naudoti betkur su useAuth
-        <AuthContext.Provider value={{ user, login, logout, register }}>
+        <AuthContext.Provider value={{ user, login, logout, registerUser }}>
             {children}
         </AuthContext.Provider>
     );

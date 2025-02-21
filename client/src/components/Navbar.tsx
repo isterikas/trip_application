@@ -23,8 +23,10 @@ function Navbar() {
           </Link>
           </div>
           <div>
-          <button className="navlinks m-2">Log in</button>
-            <button className="navlinks m-2">Sign up</button>
+            <Link to="/login">
+          <button className="navlinks m-2">Log in</button></Link>
+          <Link to="/signup">
+            <button className="navlinks m-2">Sign up</button></Link>
           </div>
         </nav>
     </>

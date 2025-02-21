@@ -18,11 +18,7 @@ function Card({ setUpdate, entry, information }) {
   return (
     <>
       <div className="grid grid-cols-3">
-        <img
-          src={entry.cover}
-          alt="book cover"
-          className="col-start-1 self-center rounded"
-        />
+  
         <div className="col-start-2 mx-7 self-center">
           {" "}
           <p className="font-bold text-2xl">{entry.title}</p>
@@ -38,7 +34,7 @@ function Card({ setUpdate, entry, information }) {
                 reservationHandler();
               }}
             >
-              Return
+              Register
             </button>
           ) : (
             <button
@@ -47,7 +43,7 @@ function Card({ setUpdate, entry, information }) {
                 reservationHandler();
               }}
             >
-              Lend
+              Register
             </button>
           )}
 

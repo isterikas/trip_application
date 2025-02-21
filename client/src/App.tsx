@@ -39,6 +39,10 @@ import Items from "./components/Items.tsx";
 import MainPage from "./components/MainPage.tsx";
 import AboutUs from "./components/AboutUs.tsx";
 import { ItemProvider } from "./context/ItemContext.tsx";
+import MyItems from "./components/MyItems.tsx";
+import LogInPage from "./components/LoginPage.tsx";
+import SignUpPage from "./components/SignUpPage.tsx";
+import { AuthProvider } from "./context/AuthContext.tsx";
 
 function App() {
   const [update, setUpdate] = useState(0);
@@ -63,55 +67,42 @@ function App() {
     <>
       <div className="flex flex-col justify-between h-screen w-screen">
         <Navbar />
-        <ItemProvider>
-        <Routes>
-          <Route
-          path="/"
-          element={<MainPage/>}/>
-         
-          <Route
-            path="/about-us"
-            element={
-              <AboutUs
-              />
-            }
-          />
-        
-           <Route
-            path="/items"
-            element={
-              <Items
-                information={information}
-                update={update}
-                setUpdate={setUpdate}
-                error={error}
-              />
-            }
-          />
-                <Route
-            path="/my-items"
-            element={
-              <Items
-                information={information}
-                update={update}
-                setUpdate={setUpdate}
-                error={error}
-              />
-            }
-          />
-          <Route
-            path="/registration"
-            element={
-              <RegistrationForm
-                setUpdate={setUpdate}
-                information={information}
-                error={error}
-              />
-            }
-          />
+        <AuthProvider>
+          <ItemProvider>
+            <Routes>
+              <Route path="/" element={<MainPage />} />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes></ItemProvider>
+              <Route path="/about-us" element={<AboutUs />} />
+
+              <Route
+                path="/items"
+                element={
+                  <Items
+                    information={information}
+                    update={update}
+                    setUpdate={setUpdate}
+                    error={error}
+                  />
+                }
+              />
+              <Route path="/my-items" element={<MyItems />} />
+              <Route
+                path="/registration"
+                element={
+                  <RegistrationForm
+                    setUpdate={setUpdate}
+                    information={information}
+                    error={error}
+                  />
+                }
+              />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/login" element={<LogInPage />} />
+
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </ItemProvider>
+        </AuthProvider>
         <div className="h-screen bg-red-50"></div>
         <Footer />
       </div>
