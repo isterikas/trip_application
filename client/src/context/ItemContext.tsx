@@ -22,7 +22,7 @@ interface ItemContextType {
 export const ItemContext = createContext<ItemContextType | undefined>(undefined);
 
 // Create provider component
-export const ItemProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export function ItemProvider ({ children } : {children: ReactNode}) {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

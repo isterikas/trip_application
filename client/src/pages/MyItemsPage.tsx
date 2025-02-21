@@ -1,4 +1,4 @@
-function MyItems(){
+function MyItemsPage(){
     return<>
     <div>
         <p>dawd</p>
@@ -6,4 +6,4 @@ function MyItems(){
         </div></>
 }
 
-export default MyItems
+export default MyItemsPage

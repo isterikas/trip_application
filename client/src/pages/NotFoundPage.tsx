@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 
-function NotFound() {
+function NotFoundPage() {
   const navigate = useNavigate();
 
   return (
@@ -22,4 +22,4 @@ function NotFound() {
   );
 }
 
-export default NotFound;
+export default NotFoundPage;

@@ -18,7 +18,6 @@ function Card({ setUpdate, entry, information }) {
   return (
     <>
       <div className="grid grid-cols-3">
-  
         <div className="col-start-2 mx-7 self-center">
           {" "}
           <p className="font-bold text-2xl">{entry.title}</p>
