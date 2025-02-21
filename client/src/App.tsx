@@ -37,6 +37,8 @@ import { getAllData } from "./lib/get.ts";
 import Footer from "./components/Footer.tsx";
 import Items from "./components/Items.tsx";
 import MainPage from "./components/MainPage.tsx";
+import AboutUs from "./components/AboutUs.tsx";
+import { ItemProvider } from "./context/ItemContext.tsx";
 
 function App() {
   const [update, setUpdate] = useState(0);
@@ -61,11 +63,21 @@ function App() {
     <>
       <div className="flex flex-col justify-between h-screen w-screen">
         <Navbar />
+        <ItemProvider>
         <Routes>
           <Route
           path="/"
           element={<MainPage/>}/>
+         
           <Route
+            path="/about-us"
+            element={
+              <AboutUs
+              />
+            }
+          />
+        
+           <Route
             path="/items"
             element={
               <Items
@@ -99,7 +111,7 @@ function App() {
           />
 
           <Route path="*" element={<NotFound />} />
-        </Routes>
+        </Routes></ItemProvider>
         <div className="h-screen bg-red-50"></div>
         <Footer />
       </div>

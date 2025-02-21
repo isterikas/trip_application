@@ -7,7 +7,7 @@ import java.util.List;
 public class TripMapper {
 
   public static TripResponseDTO toTripResponseDTO(Trip trip) {
-    return new TripResponseDTO(trip.getName());
+    return new TripResponseDTO(trip.getName(), trip.getPrice());
   }
 
   public static List<TripResponseDTO> toTripResponseDTOList(List<Trip> trips) {

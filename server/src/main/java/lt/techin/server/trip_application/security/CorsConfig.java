@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
-  @Value("${app.client.url}")
+  @Value("http://localhost:5173/")
   private String clientUrl;
 
   @Override

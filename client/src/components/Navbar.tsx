@@ -7,6 +7,12 @@ function Navbar() {
         <nav className="flex justify-between element-bg">
           <div>
           <Link to="/">
+            <button className="navlinks m-2">Home</button>
+          </Link>
+          <Link to="/about-us">
+            <button className="navlinks m-2">About us</button>
+          </Link>
+          <Link to="/items">
             <button className="navlinks m-2">Items</button>
           </Link>
           <Link to="/my-items">
