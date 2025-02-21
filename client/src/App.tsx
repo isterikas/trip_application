@@ -36,6 +36,7 @@ import { useEffect, useState } from "react";
 import { getAllData } from "./lib/get.ts";
 import Footer from "./components/Footer.tsx";
 import Items from "./components/Items.tsx";
+import MainPage from "./components/MainPage.tsx";
 
 function App() {
   const [update, setUpdate] = useState(0);
@@ -58,11 +59,25 @@ function App() {
 
   return (
     <>
-      <div className="flex flex-col justify-between h-screen">
+      <div className="flex flex-col justify-between h-screen w-screen">
         <Navbar />
         <Routes>
           <Route
-            path="/"
+          path="/"
+          element={<MainPage/>}/>
+          <Route
+            path="/items"
+            element={
+              <Items
+                information={information}
+                update={update}
+                setUpdate={setUpdate}
+                error={error}
+              />
+            }
+          />
+                <Route
+            path="/my-items"
             element={
               <Items
                 information={information}
@@ -85,6 +100,7 @@ function App() {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <div className="h-screen bg-red-50"></div>
         <Footer />
       </div>
     </>

@@ -1,6 +1,5 @@
 package lt.techin.server.trip_application.service;
 
-import jakarta.transaction.Transactional;
 import lt.techin.server.trip_application.model.UserTrip;
 import lt.techin.server.trip_application.repository.UserTripRepository;
 import org.springframework.beans.factory.annotation.Autowired;

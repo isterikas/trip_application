@@ -3,7 +3,6 @@ package lt.techin.server.trip_application.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

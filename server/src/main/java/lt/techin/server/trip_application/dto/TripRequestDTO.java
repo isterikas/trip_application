@@ -1,9 +1,7 @@
 package lt.techin.server.trip_application.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lt.techin.server.trip_application.model.TripDate;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 

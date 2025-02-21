@@ -63,6 +63,24 @@ public class TripController {
     return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(trip.getId()).toUri()).body(TripMapper.toTripResponseDTO(trip));
   }
 
+  @PostMapping("/{tripId}/{tripDateId}/register")
+  public ResponseEntity<UserTripRegistrationDTO> registerForTrip(@PathVariable long tripId, @PathVariable long tripDateId, Authentication authentication) {
+    if (tripService.findTripById(tripId).isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    User user = (User) authentication.getPrincipal();
+    if (tripDateService.findTripDateById(tripDateId).get().getUserTrips().stream().anyMatch(userTrip -> userTrip.getUser().getId() == user.getId())) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+    Optional<TripDate> tripForRegistration = tripService.findTripById(tripId).get().getTripDates().stream().filter(tripDate -> tripDate.getId() == tripDateId).findFirst();
+    if (tripForRegistration.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    UserTrip userTrip = new UserTrip(tripForRegistration.get(), user);
+    userTripService.save(userTrip);
+    return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userTrip.getId()).toUri()).body(UserTripMapper.toUserTripResponseDTO(userTrip));
+  }
+
   @GetMapping
   public ResponseEntity<List<TripResponseDTO>> getTrips() {
     List<Trip> trips = tripService.findAll();
@@ -73,7 +91,6 @@ public class TripController {
   public ResponseEntity<List<TripResponseDTO>> findTrips(@RequestParam(required = false) String name, @RequestParam(required = false) String date) {
 
     if (!date.isEmpty()) {
-
       if (name.isEmpty()) {
         return ResponseEntity.status(HttpStatus.OK).body(tripService.findByDate(date).stream().map(TripMapper::toTripResponseDTO).toList());
       } else {
@@ -84,14 +101,13 @@ public class TripController {
 
   }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteTripById(@PathVariable long id) {
-    if (!tripService.existsById(id)) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-    tripService.deleteById(id);
-    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  @GetMapping("/my")
+  public ResponseEntity<List<UserTripStatementDTO>> getAllRegistrations(Authentication authentication) {
+    User user = (User) authentication.getPrincipal();
+    List<UserTrip> myTrips = userTripService.findAll().stream().filter(userTrip -> userTrip.getUser().getId() == user.getId()).toList();
+    return ResponseEntity.status(HttpStatus.OK).body(UserTripMapper.toUserTripStatementDTOList(myTrips));
   }
+
 
   @PutMapping("/{id}")
   public ResponseEntity<?> updateTrip(@PathVariable long id, @RequestBody TripRequestDTO tripRequestDTO) {
@@ -110,30 +126,16 @@ public class TripController {
     return ResponseEntity.status(HttpStatus.OK).body(TripMapper.toTripResponseDTO(updateTrip.get()));
   }
 
-  @PostMapping("/{tripId}/{tripDateId}/register")
-  public ResponseEntity<UserTripRegistrationDTO> registerForTrip(@PathVariable long tripId, @PathVariable long tripDateId, Authentication authentication) {
-    if (tripService.findTripById(tripId).isEmpty()) {
+  @PutMapping("/{userTripId}/status")
+  public ResponseEntity<RateTripResponseDTO> changeStatus(@PathVariable long userTripId, @RequestBody RateTripRequestDTO rateTripRequestDTO) {
+    if (!userTripService.existsById(userTripId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
-    User user = (User) authentication.getPrincipal();
-    if (tripDateService.findTripDateById(tripDateId).get().getUserTrips().stream().anyMatch(userTrip -> userTrip.getUser().getId() == user.getId())) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
-    Optional<TripDate> tripForRegistration = tripService.findTripById(tripId).get().getTripDates().stream().filter(tripDate -> tripDate.getId() == tripDateId).findFirst();
-    if (tripForRegistration.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-
-    UserTrip userTrip = new UserTrip(tripForRegistration.get(), user);
+    UserTrip userTrip = userTripService.findUserTripById(userTripId).get();
+    userTrip.setRating(rateTripRequestDTO.rating());
+    userTrip.setComment(rateTripRequestDTO.comment());
     userTripService.save(userTrip);
-    return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userTrip.getId()).toUri()).body(UserTripMapper.toUserTripResponseDTO(userTrip));
-  }
-
-  @GetMapping("/my")
-  public ResponseEntity<List<UserTripStatementDTO>> getAllRegistrations(Authentication authentication) {
-    User user = (User) authentication.getPrincipal();
-    List<UserTrip> myTrips = userTripService.findAll().stream().filter(userTrip -> userTrip.getUser().getId() == user.getId()).toList();
-    return ResponseEntity.status(HttpStatus.OK).body(UserTripMapper.toUserTripStatementDTOList(myTrips));
+    return ResponseEntity.status(HttpStatus.OK).body(UserTripMapper.toRateTripResponseDTO(userTrip));
   }
 
   @PutMapping("/my/{userTripId}")
@@ -143,7 +145,6 @@ public class TripController {
     }
     LocalDate date = LocalDate.parse(changeDateRequestDTO.date());
     UserTrip userTrip = userTripService.findUserTripById(userTripId).get();
-
     TripDate desiredDate = userTripService.findUserTripById(userTripId).get().getTripDate().getTrip().getTripDates().stream().filter(tripDate -> tripDate.getDate().equals(date)).findFirst().get();
     userTrip.setTripDate(desiredDate);
     userTripService.save(userTrip);
@@ -156,13 +157,20 @@ public class TripController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
     UserTrip userTrip = userTripService.findUserTripById(userTripId).get();
-
     userTrip.setRating(rateTripRequestDTO.rating());
     userTrip.setComment(rateTripRequestDTO.comment());
     userTripService.save(userTrip);
     return ResponseEntity.status(HttpStatus.OK).body(UserTripMapper.toRateTripResponseDTO(userTrip));
   }
 
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteTripById(@PathVariable long id) {
+    if (!tripService.existsById(id)) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    tripService.deleteById(id);
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+  }
 
   @DeleteMapping("/my/{userTripId}")
   public ResponseEntity<Void> deleteRegistration(@PathVariable long userTripId, Authentication authentication) {
@@ -177,18 +185,4 @@ public class TripController {
     }
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
   }
-
-  @PutMapping("/{userTripId}/status")
-  public ResponseEntity<RateTripResponseDTO> changeStatus(@PathVariable long userTripId, @RequestBody RateTripRequestDTO rateTripRequestDTO) {
-    if (!userTripService.existsById(userTripId)) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-    }
-    UserTrip userTrip = userTripService.findUserTripById(userTripId).get();
-
-    userTrip.setRating(rateTripRequestDTO.rating());
-    userTrip.setComment(rateTripRequestDTO.comment());
-    userTripService.save(userTrip);
-    return ResponseEntity.status(HttpStatus.OK).body(UserTripMapper.toRateTripResponseDTO(userTrip));
-  }
-
 }

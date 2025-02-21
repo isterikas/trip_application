@@ -3,16 +3,24 @@ import { Link } from "react-router";
 function Navbar() {
   return (
     <>
-      <div>
-        <nav className="w-full flex justify-start bg-teal-500 ">
+
+        <nav className="flex justify-between element-bg">
+          <div>
           <Link to="/">
-            <button className="navlinks">Books</button>
+            <button className="navlinks m-2">Items</button>
+          </Link>
+          <Link to="/my-items">
+          <button className="navlinks m-2">My Items</button>
           </Link>
           <Link to="/registration">
-            <button className="navlinks">Book registration</button>
+            <button className="navlinks m-2">Item registration</button>
           </Link>
+          </div>
+          <div>
+          <button className="navlinks m-2">Log in</button>
+            <button className="navlinks m-2">Sign up</button>
+          </div>
         </nav>
-      </div>
     </>
   );
 }

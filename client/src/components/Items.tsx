@@ -3,7 +3,7 @@ import Card from "./Card";
 function Items({ information, setUpdate, error }) {
   return (
     <>
-      {information.map((entry: object) => {
+      {/* {information.map((entry: object) => {
         return (
           <>
             {!error && (
@@ -21,7 +21,7 @@ function Items({ information, setUpdate, error }) {
             {error && <p>{error}</p>}
           </>
         );
-      })}
+      })} */}
     </>
   );
 }

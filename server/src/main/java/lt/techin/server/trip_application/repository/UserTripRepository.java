@@ -4,10 +4,7 @@ import jakarta.transaction.Transactional;
 import lt.techin.server.trip_application.model.UserTrip;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
-
-import java.nio.charset.StandardCharsets;
 
 public interface UserTripRepository extends JpaRepository<UserTrip, Long> {
   @Transactional
