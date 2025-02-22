@@ -6,6 +6,7 @@ import lt.techin.server.trip_application.model.*;
 import lt.techin.server.trip_application.service.TripDateService;
 import lt.techin.server.trip_application.service.TripService;
 import lt.techin.server.trip_application.service.UserTripService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -213,5 +214,17 @@ public class TripController {
       return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+  }
+
+  @PatchMapping("/{userTripId}/review")
+  public ResponseEntity<Void> changeStatus(@PathVariable long userTripId, @RequestBody StatusRequestDTO statusRequestDTO) {
+    if (!userTripService.existsById(userTripId)) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    UserTrip userTrip = userTripService.findUserTripById(userTripId).get();
+    userTrip.setStatus(statusRequestDTO.status().equalsIgnoreCase("approved") ? TripStatus.APPROVED : TripStatus.REJECTED);
+    userTripService.save(userTrip);
+    return ResponseEntity.status(HttpStatus.OK).build();
   }
 }

@@ -25,27 +25,30 @@ function Navbar() {
             ""
           )}
 
-          {user
-            ? Object.values(user.roles).includes("ROLE_ADMIN") && (
-                <>
-                  <Link to="/registration">
-                    <Button buttonType={"navlinks"}>Item registration</Button>
-                  </Link>
-                  <Link to="/registration-approval">
-                    <Button buttonType={"navlinks"}>
-                      Registration approval
-                    </Button>
-                  </Link>
-                </>
-              )
-            : ""}
+          {user &&
+            user.roles &&
+            Object.values(user.roles).includes("ROLE_ADMIN") && (
+              <>
+                <Link to="/registration">
+                  <Button buttonType={"navlinks"}>Item registration</Button>
+                </Link>
+                <Link to="/registration-approval">
+                  <Button buttonType={"navlinks"}>Registration approval</Button>
+                </Link>
+              </>
+            )}
         </div>
         {user ? (
-          <Link to="/">
-            <Button buttonType={"navlinks"} onClick={logout}>
-              Log out
-            </Button>
-          </Link>
+          <>
+            <div className="flex items-center font-bold">
+              <p>welcome {user.username}!</p>
+              <Link to="/">
+                <Button buttonType={"navlinks"} onClick={logout}>
+                  Log out
+                </Button>
+              </Link>
+            </div>
+          </>
         ) : (
           <div>
             <Link to="/login">

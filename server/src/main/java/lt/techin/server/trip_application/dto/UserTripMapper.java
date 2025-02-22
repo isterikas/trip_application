@@ -23,7 +23,7 @@ public class UserTripMapper {
   }
 
   public static UserTripPendingDTO toUserTripPendingDTO(UserTrip userTrip) {
-    return new UserTripPendingDTO(userTrip.getId(), userTrip.getTripDate().getTrip().getName(), userTrip.getTripDate().getDate(), userTrip.getTripDate().getUserTrips().size());
+    return new UserTripPendingDTO(userTrip.getId(), userTrip.getUser().getUsername(), userTrip.getTripDate().getTrip().getName(), userTrip.getTripDate().getDate(), userTrip.getTripDate().getUserTrips().size());
   }
 
   public static List<UserTripPendingDTO> toUserTripPendingDTOList(List<UserTrip> userTrips) {
