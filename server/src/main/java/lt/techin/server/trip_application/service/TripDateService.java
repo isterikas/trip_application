@@ -34,4 +34,8 @@ public class TripDateService {
   public TripDate findDateByIdAndDate(long id, LocalDate date) {
     return tripDateRepository.findAll().stream().filter(tripDate -> tripDate.getTrip().getId() == id).filter(tripDate -> tripDate.getDate().equals(date)).findFirst().get();
   }
+
+  public boolean existsById(long id) {
+    return tripDateRepository.existsById(id);
+  }
 }

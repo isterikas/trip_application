@@ -13,15 +13,11 @@ function ItemsPage() {
         <li key={item.id}>{item.name} - ${item.price}</li>
       ))}
     </ul> */}
-
-      {items.map((entry: object) => {
-        return (
-          <>
-            {!error && <Card entry={entry} />}
-            {error && <p>{error}</p>}
-          </>
-        );
-      })}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full">
+        {!error && items.map((entry) => <Card entry={entry} />)}
+        {error && <div>error</div>}
+        {loading && <div>loading ...</div>}
+      </div>
     </>
   );
 }

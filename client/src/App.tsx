@@ -6,6 +6,8 @@ import Footer from "./components/Footer.tsx";
 import MainPage from "./pages/MainPage.tsx";
 import LoadingPage from "./pages/LoadingPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
+import TripRegistrationPage from "./pages/TripRegistrationPage.tsx";
+import RegistrationApproval from "./pages/RegistrationApproval.tsx";
 
 const LazyAboutUsPage = lazy(() => import("./pages/AboutUsPage.tsx"));
 const LazyItemsPage = lazy(() => import("./pages/ItemsPage.tsx"));
@@ -16,9 +18,9 @@ const LazySignUpPage = lazy(() => import("./pages/SignUpPage.tsx"));
 function App() {
   return (
     <>
-      <div className="flex flex-col justify-between h-screen w-screen">
+      <div className="flex flex-col justify-between h-screen w-screen overflow-auto box-border">
         <Navbar />
-        <div className="flex-1">
+        <div className="flex-1 w-full">
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route
@@ -37,6 +39,7 @@ function App() {
                 </Suspense>
               }
             />
+            <Route path="/items/:id" element={<TripRegistrationPage />} />
             <Route
               path="/my-items"
               element={
@@ -69,6 +72,8 @@ function App() {
                 </Suspense>
               }
             />
+            <Route path="/registration-approval"
+              element={ <RegistrationApproval/>}/>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>

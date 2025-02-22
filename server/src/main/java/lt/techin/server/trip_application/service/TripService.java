@@ -51,4 +51,5 @@ public class TripService {
   public Optional<Trip> findTripById(long id) {
     return tripRepository.findById(id);
   }
+
 }

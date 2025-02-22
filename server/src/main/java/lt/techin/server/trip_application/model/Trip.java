@@ -12,14 +12,16 @@ public class Trip {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
   private String name;
-  private String category;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "category")
+  private TripCategory category;
   private String image;
   private String duration;
   private BigDecimal price;
   @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
   private List<TripDate> tripDates;
 
-  public Trip(String name, String category, String image, String duration, BigDecimal price) {
+  public Trip(String name, TripCategory category, String image, String duration, BigDecimal price) {
     this.name = name;
     this.category = category;
     this.image = image;
@@ -43,11 +45,11 @@ public class Trip {
     this.name = name;
   }
 
-  public String getCategory() {
+  public TripCategory getCategory() {
     return category;
   }
 
-  public void setCategory(String category) {
+  public void setCategory(TripCategory category) {
     this.category = category;
   }
 

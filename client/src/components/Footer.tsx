@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <>
-      <div className="element-bg w-full p-3 flex justify-center items-center">
+      <div className="element-bg w-full py-3 flex justify-center items-center">
         <p className="italic text-white">© Eryk Tatol 2025</p>
       </div>
     </>

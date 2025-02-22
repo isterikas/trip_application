@@ -37,4 +37,8 @@ public class UserTripService {
   public boolean existsById(long userTripId) {
     return userTripRepository.existsById(userTripId);
   }
+
+  public List<UserTrip> findUserTripsByTripId(long tripId) {
+    return userTripRepository.findAll().stream().filter(userTrip -> userTrip.getTripDate().getTrip().getId() == tripId).toList();
+  }
 }

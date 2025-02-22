@@ -1,34 +1,62 @@
 import { Link } from "react-router";
+import Button from "./Button";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
+  const { user, logout } = useAuth();
   return (
     <>
-
-        <nav className="flex justify-between element-bg">
-          <div>
+      <nav className="flex justify-between element-bg">
+        <div>
           <Link to="/">
-            <button className="navlinks m-2">Home</button>
+            <Button buttonType={"navlinks"}>Home</Button>
           </Link>
           <Link to="/about-us">
-            <button className="navlinks m-2">About us</button>
+            <Button buttonType={"navlinks"}>About Us</Button>
           </Link>
           <Link to="/items">
-            <button className="navlinks m-2">Items</button>
+            <Button buttonType={"navlinks"}>Items</Button>
           </Link>
-          <Link to="/my-items">
-          <button className="navlinks m-2">My Items</button>
+          {user ? (
+            <Link to="/my-items">
+              <Button buttonType={"navlinks"}>My items</Button>
+            </Link>
+          ) : (
+            ""
+          )}
+
+          {user
+            ? Object.values(user.roles).includes("ROLE_ADMIN") && (
+                <>
+                  <Link to="/registration">
+                    <Button buttonType={"navlinks"}>Item registration</Button>
+                  </Link>
+                  <Link to="/registration-approval">
+                    <Button buttonType={"navlinks"}>
+                      Registration approval
+                    </Button>
+                  </Link>
+                </>
+              )
+            : ""}
+        </div>
+        {user ? (
+          <Link to="/">
+            <Button buttonType={"navlinks"} onClick={logout}>
+              Log out
+            </Button>
           </Link>
-          <Link to="/registration">
-            <button className="navlinks m-2">Item registration</button>
-          </Link>
-          </div>
+        ) : (
           <div>
             <Link to="/login">
-          <button className="navlinks m-2">Log in</button></Link>
-          <Link to="/signup">
-            <button className="navlinks m-2">Sign up</button></Link>
+              <Button buttonType={"navlinks"}>Log In</Button>
+            </Link>
+            <Link to="/signup">
+              <Button buttonType={"navlinks"}>Sign Up</Button>
+            </Link>
           </div>
-        </nav>
+        )}
+      </nav>
     </>
   );
 }

@@ -3,12 +3,15 @@ import axios from "axios";
 import { URL } from "../lib/constants";
 
 // Define item type interface
-interface Item {
+export interface Item {
   id: number;
   name: string;
-  description: string;
+  category: string;
+  image: string;
+  duration: string;
   price: number;
-  imageUrl: string;
+  available: boolean;
+  rating: number;
 }
 
 // Define context type
@@ -19,10 +22,12 @@ interface ItemContextType {
 }
 
 // Create context with default values
-export const ItemContext = createContext<ItemContextType | undefined>(undefined);
+export const ItemContext = createContext<ItemContextType | undefined>(
+  undefined
+);
 
 // Create provider component
-export function ItemProvider ({ children } : {children: ReactNode}) {
+export function ItemProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,15 +35,11 @@ export function ItemProvider ({ children } : {children: ReactNode}) {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get(`${URL}/api/trips`);;
-        
-        setItems(response.data)
-        console.log(response.data);
-        ;
+        const response = await axios.get(`${URL}/api/trips`);
+
+        setItems(response.data);
       } catch (err) {
         setError("Failed to fetch items");
-        console.log(err);
-        
       } finally {
         setLoading(false);
       }
@@ -52,7 +53,7 @@ export function ItemProvider ({ children } : {children: ReactNode}) {
       {children}
     </ItemContext.Provider>
   );
-};
+}
 
 // Custom hook to use context
 export const useItemContext = () => {

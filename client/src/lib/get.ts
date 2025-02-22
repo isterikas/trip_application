@@ -6,7 +6,18 @@ export const getAllData = async (resource?: string) => {
   return response.data;
 };
 
-export const getOne = async (id:number) => {
+export const getOne = async (id: number) => {
   const response = await axios.get(`${URL}/${id}`);
+  return response.data;
+};
+
+export const getMyTrips = async (user) => {
+  const response = await axios.get(`${URL}/my`, {
+    auth: {
+      username: user.username,
+      password: user.password,
+    },
+  });
+  console.log(response.data);
   return response.data;
 };
