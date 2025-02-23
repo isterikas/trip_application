@@ -13,16 +13,20 @@ export const postImage = async (data: object) => {
 };
 
 export const postRegistration = async (tripDateId: number, user) => {
-  const response = await axios.post(
-    `${URL}/api/trips/${tripDateId}/register`,
-    {},
-    {
-      auth: {
-        username: user.username,
-        password: user.password,
-      },
-    }
-  );
-  console.log(response.data);
-  return response.data;
+  try {
+    const response = await axios.post(
+      `${URL}/api/trips/${tripDateId}/register`,
+      {},
+      {
+        auth: {
+          username: user.username,
+          password: user.password,
+        },
+      }
+    );
+    console.log(response);
+    return { data: response.data, ok: true };
+  } catch (error) {
+    return { ok: false };
+  }
 };

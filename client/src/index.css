@@ -7,7 +7,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #cdcfcf;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -39,7 +39,7 @@ h1 {
 
 @layer components {
   .element-bg {
-    background-color: #ff6a5c;
+    background-color: #fe6c6c;
   }
   .body-bg {
     background-color: #646cff;

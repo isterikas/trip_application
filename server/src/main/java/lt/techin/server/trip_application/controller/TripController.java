@@ -95,11 +95,14 @@ public class TripController {
   }
 
   @GetMapping("/{tripId}")
-  public ResponseEntity<List<AvailableDatesResponseDTO>> getAvailableDates(@PathVariable long tripId) {
+  public ResponseEntity<List<AvailableDatesResponseDTO>> getAvailableDates(@PathVariable long tripId, Authentication authentication) {
     if (!tripService.existsById(tripId)) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
-    List<AvailableDatesResponseDTO> tripDates = tripService.findTripById(tripId).get().getTripDates().stream().map(tripDate -> TripMapper.toAvailableDateResponseDTO(tripDate)).toList();
+    User user = (User) authentication.getPrincipal();
+    List<AvailableDatesResponseDTO> tripDates = tripService.findTripById(tripId).get().getTripDates()
+            .stream().filter(tripDate -> tripDate.getUserTrips().stream().filter(userTrip -> userTrip.getUser().getId() == user.getId()).toList().isEmpty())
+            .map(tripDate -> TripMapper.toAvailableDateResponseDTO(tripDate)).toList();
     return ResponseEntity.status(HttpStatus.OK).body(tripDates);
   }
 

@@ -1,12 +1,14 @@
-import  { ReactNode } from "react";
+import { ReactNode } from "react";
 import { AuthProvider } from "./AuthContext";
 import { ItemProvider } from "./ItemContext";
+import { SnackbarProvider } from "./SnackbarProvider";
 
-export function ContextProvider ({children} : {children : ReactNode}) {
-
+export function ContextProvider({ children }: { children: ReactNode }) {
   return (
     <AuthProvider>
-      <ItemProvider>{children}</ItemProvider>
+      <ItemProvider>
+        <SnackbarProvider>{children}</SnackbarProvider>
+      </ItemProvider>
     </AuthProvider>
   );
-};
+}

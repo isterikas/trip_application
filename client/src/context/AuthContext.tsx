@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import api, { setAuth, clearAuth } from "../utils/api.js";
 
 const AuthContext = createContext({
-  user: {},
+  user: null,
   login: () => {},
   logout: () => {},
   register: () => {},
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    setUser({});
+    setUser(null);
     // Ištrinam username ir password iš axios
     clearAuth();
     localStorage.removeItem("user");

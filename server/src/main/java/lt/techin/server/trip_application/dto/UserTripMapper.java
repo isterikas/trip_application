@@ -7,7 +7,7 @@ import java.util.List;
 public class UserTripMapper {
 
   public static UserTripRegistrationDTO toUserTripResponseDTO(UserTrip userTrip) {
-    return new UserTripRegistrationDTO(userTrip.getTripDate().getDate(), userTrip.getTripDate().getTrip().getName(), userTrip.getTripDate().getTrip().getPrice(), "Registration successful.");
+    return new UserTripRegistrationDTO(userTrip.getTripDate().getId(), userTrip.getTripDate().getDate(), userTrip.getTripDate().getTrip().getName(), userTrip.getTripDate().getTrip().getPrice(), "Registration successful.");
   }
 
   public static UserTripStatementDTO toUserTripStatementDTO(UserTrip userTrip) {

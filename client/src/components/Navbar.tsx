@@ -6,7 +6,7 @@ function Navbar() {
   const { user, logout } = useAuth();
   return (
     <>
-      <nav className="flex justify-between element-bg">
+      <nav className="flex justify-between element-bg shadow-2xs">
         <div>
           <Link to="/">
             <Button buttonType={"navlinks"}>Home</Button>

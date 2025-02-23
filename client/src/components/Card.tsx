@@ -10,12 +10,12 @@ function Card({ entry }: { entry: Item }) {
     <>
       <div
         key={entry.id}
-        className="m-3 p-2 rounded flex flex-col justify-center items-center bg-green-400"
+        className="m-3 p-2 rounded flex flex-col justify-center items-center bg-[#1a8f70] shadow-2xs"
       >
         <img
           src={entry.image}
           alt="destination picture"
-          className="w-100 h-50 rounded object-cover m-2"
+          className="w-100 h-50 rounded object-cover m-2 shadow-sm"
         />
         <p className="font-bold">Destination: {entry.name}</p>
         <p>Price: {`€${entry.price}`}</p>

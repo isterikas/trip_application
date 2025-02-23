@@ -1,10 +1,30 @@
 import Button from "./Button";
-import axios from "axios";
 import { postRegistration } from "../lib/post";
 import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
+import { useSnackbar } from "../context/SnackbarProvider";
 
-function RegistrationCard({ tripDate }) {
+function RegistrationCard({ tripDate, setTrips }) {
   const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const { showSnackbar } = useSnackbar();
+
+  async function handleRegistration() {
+    setLoading(true);
+
+    const response = await postRegistration(tripDate.id, user);
+
+    if (!response.ok) {
+      setLoading(false);
+      showSnackbar("Ups, something went wrong", "error");
+      return;
+    }
+
+    setTrips((prev) => prev.filter((trip) => trip.id !== response.data.id));
+    showSnackbar("Action successful", "success");
+    setLoading(false);
+  }
+
   return (
     <>
       <div
@@ -17,9 +37,10 @@ function RegistrationCard({ tripDate }) {
         </div>
         <Button
           buttonType={"registration"}
-          onClick={() => postRegistration(tripDate.id, user)}
+          onClick={handleRegistration}
+          loading={loading}
         >
-          Register
+          {loading ? "Loading ..." : "Register"}
         </Button>
       </div>
     </>
