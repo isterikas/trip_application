@@ -5,13 +5,18 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { deleteItemById } from "../lib/delete";
 
-function ItemCard({ item }: { item: Item }) {
+function ItemCard({ item, setItems }: { item: Item }) {
   const { user } = useAuth();
   const deleteItemHandler = () => {
-    try {
-      deleteItemById(item.id);
-    } catch (error) {
-      console.log(error);
+    if (confirm(`Do you really want do delete ${item.name}?`)) {
+      try {
+        const response = deleteItemById(item.id);
+        setItems((prev) => prev.filter((items) => items.id !== item.id));
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      return;
     }
   };
 

@@ -19,6 +19,7 @@ interface ItemContextType {
   items: Item[];
   loading: boolean;
   error: string | null;
+  setItems: Function;
 }
 
 // Create context with default values
@@ -48,7 +49,7 @@ export function ItemProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <ItemContext.Provider value={{ items, loading, error }}>
+    <ItemContext.Provider value={{ items, loading, error, setItems }}>
       {children}
     </ItemContext.Provider>
   );

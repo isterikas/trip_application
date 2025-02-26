@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { postTrip } from "../lib/post";
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useItemContext } from "../context/ItemContext";
 import { putData } from "../lib/update";
 
@@ -57,16 +57,16 @@ const RegistrationForm = ({ entry }) => {
 
   return (
     <>
-      <div className="h-screen">
+      <div className="h-screen w-full flex justify-center items-center">
         <form
-          className="flex flex-col w-1/2 m-auto"
+          className="element-bg p-7 flex flex-col w-9/10 m-auto rounded"
           noValidate
           onSubmit={handleSubmit(formSubmitHandler)}
         >
           <h1 className="text-2xl my-2">Trip registration form:</h1>
 
           <input
-            className="inputs"
+            className="my-2 p-1 border-1 border-black rounded"
             type="text"
             placeholder="Name..."
             {...register("name", {
@@ -81,10 +81,10 @@ const RegistrationForm = ({ entry }) => {
               },
             })}
           />
-          <p className="text-red-500">{errors.name?.message}</p>
+          <p className="errors">{errors.name?.message}</p>
           <label htmlFor="category">Select category:</label>
           <select
-            className="inputs"
+            className="my-2 p-1 border-1 border-black rounded"
             id="category"
             {...register("category", {
               required: "Category is required.",
@@ -99,9 +99,9 @@ const RegistrationForm = ({ entry }) => {
               );
             })}
           </select>
-          <p className="text-red-500">{errors.category?.message}</p>
+          <p className="errors">{errors.category?.message}</p>
           <input
-            className="inputs"
+            className="my-2 p-1 border-1 border-black rounded"
             type="text"
             placeholder="Image URL..."
             {...register("image", {
@@ -113,18 +113,18 @@ const RegistrationForm = ({ entry }) => {
               // },
             })}
           />
-          <p className="text-red-500">{errors.image?.message}</p>
+          <p className="errors">{errors.image?.message}</p>
           <input
-            className="inputs"
+            className="my-2 p-1 border-1 border-black rounded"
             type="text"
             placeholder="Duration..."
             {...register("duration", {
               required: "Please enter the duration.",
             })}
           />
-          <p className="text-red-500">{errors.duration?.message}</p>
+          <p className="errors">{errors.duration?.message}</p>
           <input
-            className="inputs"
+            className="my-2 p-1 border-1 border-black rounded"
             type="text"
             placeholder="Price..."
             {...register("price", {
@@ -140,9 +140,9 @@ const RegistrationForm = ({ entry }) => {
               },
             })}
           />
-          <p className="text-red-500">{errors.price?.message}</p>
+          <p className="errors">{errors.price?.message}</p>
           <input
-            className="inputs"
+            className="my-2 p-1 border-1 border-black rounded"
             type="text"
             placeholder="Dates..."
             {...register("dates", {
@@ -161,7 +161,10 @@ const RegistrationForm = ({ entry }) => {
           />
           <p className="errors">{errors.dates?.message}</p>
           <p className="text-xs">*all fields are mandatory</p>
-          <input type="submit" className="buttons my-3 w-1/2 self-center" />
+          <input
+            type="submit"
+            className="buttons my-3 p-2 w-1/3 self-center border-2 border-black rounded font-bold"
+          />
         </form>
 
         {error && <p>{error}</p>}
