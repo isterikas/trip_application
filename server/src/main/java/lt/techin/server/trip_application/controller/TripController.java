@@ -86,10 +86,12 @@ public class TripController {
     List<TripResponseDTO> tripResponseDTOList = new ArrayList<>();
     for (Trip trip : trips) {
       long tripId = trip.getId();
+      String dates = String.join(", ", trip.getTripDates().stream().map(tripDate -> tripDate.getDate().toString()).toList());
+
       BigDecimal totalUsersRegistered = BigDecimal.valueOf(userTripService.findUserTripsByTripId(tripId).stream().filter(userTrip -> userTrip.getRating() != 0).toList().size());
       BigDecimal sum = userTripService.findUserTripsByTripId(tripId).stream().map(userTrip -> BigDecimal.valueOf(userTrip.getRating())).filter(rating -> rating.compareTo(BigDecimal.ZERO) != 0).reduce(BigDecimal.ZERO, BigDecimal::add);
       BigDecimal average = totalUsersRegistered.equals(BigDecimal.ZERO) ? BigDecimal.ZERO : sum.divide(totalUsersRegistered, 2, RoundingMode.HALF_UP);
-      tripResponseDTOList.add(new TripResponseDTO(trip.getId(), trip.getName(), trip.getCategory().name(), trip.getImage(), trip.getDuration(), trip.getPrice(), !trip.getTripDates().isEmpty(), average));
+      tripResponseDTOList.add(new TripResponseDTO(trip.getId(), trip.getName(), trip.getCategory().name(), trip.getImage(), trip.getDuration(), trip.getPrice(), !trip.getTripDates().isEmpty(), average, dates));
     }
     return ResponseEntity.status(HttpStatus.OK).body(tripResponseDTOList);
   }
@@ -118,6 +120,22 @@ public class TripController {
     }
     return ResponseEntity.status(HttpStatus.OK).body(tripService.findByNameContains(name).stream().map(TripMapper::toTripResponseDTONoRating).toList());
   }
+
+//  @GetMapping("/search")
+//  public ResponseEntity<Page<TripResponseDTONoRating>> findTripsPage() {
+//int size = 6;
+//  int page =  
+//    if (!date.isEmpty()) {
+//      if (name.isEmpty()) {
+//        return ResponseEntity.status(HttpStatus.OK).body(tripService.findByDate(date).stream().map(TripMapper::toTripResponseDTONoRating).toList());
+//      } else {
+//        return ResponseEntity.status(HttpStatus.OK).body(TripMapper.toTripResponseDTOList(tripService.findByNameAndDate(name, date)));
+//      }
+//    }
+//    return ResponseEntity.status(HttpStatus.OK).body(tripService.findByNameContains(name).stream().map(TripMapper::toTripResponseDTONoRating).toList());
+//  }
+
+
 //  public Page<TripPageResponseDTO> findAllMoviesPage(int page, int size) {
 //
 //      Pageable pageable = PageRequest.of(page, size);
@@ -148,12 +166,22 @@ public class TripController {
     if (updateTrip.isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Trip not found.");
     }
+    tripService.saveTrip(updateTrip.get());
+    List<TripDate> existingTripDates = updateTrip.get().getTripDates();
+    existingTripDates.clear();
+    tripService.flush();
+    existingTripDates.addAll(
+            tripRequestDTO.dates().stream()
+                    .distinct()
+                    .map(date -> new TripDate(updateTrip.get(), date))
+                    .toList()
+    );
+
     updateTrip.get().setName(tripRequestDTO.name() == null ? updateTrip.get().getName() : tripRequestDTO.name());
     updateTrip.get().setCategory(tripRequestDTO.category() == null ? updateTrip.get().getCategory() : TripCategory.valueOf(tripRequestDTO.category().toUpperCase()));
     updateTrip.get().setImage(tripRequestDTO.image() == null ? updateTrip.get().getImage() : tripRequestDTO.image());
     updateTrip.get().setDuration(tripRequestDTO.duration() == null ? updateTrip.get().getDuration() : tripRequestDTO.duration());
     updateTrip.get().setPrice(tripRequestDTO.price() == 0 ? updateTrip.get().getPrice() : BigDecimal.valueOf(tripRequestDTO.price()));
-    updateTrip.get().setTripDates(tripRequestDTO.dates() == null ? updateTrip.get().getTripDates() : new ArrayList<>(tripRequestDTO.dates().stream().map(date -> new TripDate(updateTrip.get(), date)).toList()));
 
     tripService.saveTrip(updateTrip.get());
     return ResponseEntity.status(HttpStatus.OK).body(TripMapper.toTripResponseDTONoRating(updateTrip.get()));

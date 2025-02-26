@@ -28,12 +28,12 @@ function RegistrationCard({ itemDate, setItems }) {
   return (
     <>
       <div
-        key={tripDate.id}
-        className="bg-green-500 m-3 p-3 rounded flex justify-around items-center"
+        key={itemDate.id}
+        className="element-bg m-3 p-3 rounded flex justify-around items-center"
       >
         <div>
-          <p>{tripDate.date}</p>
-          <p>{tripDate.tripName}</p>
+          <p>{itemDate.date}</p>
+          <p>{itemDate.tripName}</p>
         </div>
         <Button
           buttonType={"registration"}

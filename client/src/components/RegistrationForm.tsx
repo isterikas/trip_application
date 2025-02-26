@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
 import { postTrip } from "../lib/post";
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router";
 import { useItemContext } from "../context/ItemContext";
+import { putData } from "../lib/update";
 
-const RegistrationForm = () => {
+const RegistrationForm = ({ entry }) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { items } = useItemContext();
@@ -22,15 +23,37 @@ const RegistrationForm = () => {
 
   const formSubmitHandler = async (data) => {
     data.dates = data.dates.split(",").map((date) => date.trim());
-
-    try {
-      console.log(data);
-      await postTrip(data);
-      navigate("/");
-    } catch (error) {
-      setError(error.message);
+    if (!entry) {
+      try {
+        console.log(data);
+        await postTrip(data);
+        navigate("/");
+      } catch (error) {
+        setError(error.message);
+      }
+    } else {
+      try {
+        await putData(entry.id, data);
+        navigate("/");
+      } catch (error) {
+        setError(error.message);
+      }
     }
   };
+
+  useEffect(() => {
+    if (entry) {
+      const { name, category, image, duration, price, dates } = entry;
+      setValue("name", name);
+      setValue("category", category);
+      setValue("image", image);
+      setValue("duration", duration);
+      setValue("price", price);
+      setValue("dates", dates);
+      console.log(dates);
+      console.log(price);
+    }
+  }, [entry]);
 
   return (
     <>
@@ -128,14 +151,15 @@ const RegistrationForm = () => {
               //   value: 0.01,
               //   message: "Price cannot be set to a negative number or 0",
               // },
-              // pattern: {
-              //   value: /^[0-9]*\.[0-9][0-9]$/,
-              //   message:
-              //     "Price must be a number (if decimal - max 2 digits after comma).",
-              // },
+              pattern: {
+                value:
+                  /^(?:\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01]))(?:\s*,\s*\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01]))*$/,
+                message:
+                  "Please write the dates in YYYY-MM-DD format and separated by commas",
+              },
             })}
           />
-          <p>{errors.dates?.message}</p>
+          <p className="errors">{errors.dates?.message}</p>
           <p className="text-xs">*all fields are mandatory</p>
           <input type="submit" className="buttons my-3 w-1/2 self-center" />
         </form>

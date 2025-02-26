@@ -9,7 +9,9 @@ public record TripResponseDTO(long id,
                               String duration,
                               BigDecimal price,
                               boolean available,
-                              BigDecimal rating
+                              BigDecimal rating,
+                              String dates
+
 
 ) {
 }

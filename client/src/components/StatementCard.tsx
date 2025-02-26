@@ -5,7 +5,7 @@ function StatementCard({ item }) {
     <>
       <div
         key={item.id}
-        className="m-3 p-2 rounded flex flex-col justify-center items-center bg-[#1a8f70]"
+        className="element-bg m-3 p-2 rounded flex flex-col justify-center items-center"
       >
         <p>{item.name}</p>
         <p>{item.date}</p>

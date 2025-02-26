@@ -2,7 +2,7 @@ import axios from "axios";
 import { URL } from "./constants";
 
 export const putData = async (id: number, data: object) => {
-  const response = await axios.put(`${URL}/${id}`, data);
+  const response = await axios.put(`${URL}/api/trips/${id}`, data);
   return response.data;
 };
 

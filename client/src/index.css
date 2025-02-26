@@ -38,11 +38,14 @@ h1 {
 }
 
 @layer components {
-  .element-bg {
+  .main-bg {
     background-color: #fe6c6c;
   }
   .body-bg {
     background-color: #646cff;
+  }
+  .element-bg {
+    background-color: #1a8f70;
   }
   .errors {
     color: #ff0000;

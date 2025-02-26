@@ -1,7 +1,7 @@
 import { Item } from "../context/ItemContext";
 import Button from "./Button";
 import { capitalizeFirstLetter } from "../lib/capitalizeFirstLetter";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { deleteItemById } from "../lib/delete";
 
@@ -19,7 +19,7 @@ function ItemCard({ item }: { item: Item }) {
     <>
       <div
         key={item.id}
-        className="m-3 p-2 rounded flex flex-col justify-center items-center bg-[#1a8f70] shadow-2xs"
+        className="element-bg m-3 p-2 rounded flex flex-col justify-center items-center shadow-2xs"
       >
         <img
           src={item.image}
@@ -47,7 +47,7 @@ function ItemCard({ item }: { item: Item }) {
         {user
           ? Object.values(user.roles).includes("ROLE_ADMIN") && (
               <div className="flex">
-                <Link to={`/items/${item.id}`}>
+                <Link to={"/registration"} state={{ entry: item }}>
                   <Button buttonType={"registration"}>Edit</Button>
                 </Link>
                 <Button buttonType={"registration"} onClick={deleteItemHandler}>

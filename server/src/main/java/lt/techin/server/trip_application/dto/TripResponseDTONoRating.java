@@ -8,5 +8,6 @@ public record TripResponseDTONoRating(long id,
                                       String image,
                                       String duration,
                                       BigDecimal price,
-                                      boolean available) {
+                                      boolean available,
+                                      String dates) {
 }

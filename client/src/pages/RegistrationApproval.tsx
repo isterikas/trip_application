@@ -41,7 +41,7 @@ function RegistrationApproval() {
         {items.map((item) => (
           <div
             key={item.registrationId}
-            className="bg-[#1a8f70] m-3 p-5 flex flex-col rounded border-1 border-black"
+            className="element-bg m-3 p-5 flex flex-col rounded border-1 border-black"
           >
             <p>Trip name: {item.tripName}</p>
             <p>Date: {item.tripDate.toString()}</p>

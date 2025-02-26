@@ -7,7 +7,7 @@ import LoadingPage from "./pages/LoadingPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
 import TripRegistrationPage from "./pages/TripRegistrationPage.tsx";
 import RegistrationApproval from "./pages/RegistrationApproval.tsx";
-import TripCreationPage from "./pages/TripCreationPage.tsx";
+import TripCreationPage from "./pages/ItemCreationPage.tsx";
 
 const LazyAboutUsPage = lazy(() => import("./pages/AboutUsPage.tsx"));
 const LazyItemsPage = lazy(() => import("./pages/ItemsPage.tsx"));

@@ -3,6 +3,7 @@ package lt.techin.server.trip_application.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,7 +28,7 @@ public class Trip {
     this.image = image;
     this.duration = duration;
     this.price = price;
-    this.tripDates = List.of();
+    this.tripDates = new ArrayList<>();
   }
 
   public Trip() {

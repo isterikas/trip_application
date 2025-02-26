@@ -3,6 +3,9 @@ package lt.techin.server.trip_application.service;
 import lt.techin.server.trip_application.model.Trip;
 import lt.techin.server.trip_application.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,6 +33,12 @@ public class TripService {
     return tripRepository.findTripByNameContains(name).get();
   }
 
+  public Page<Trip> findAllMoviesPage(int page, int size) {
+    Pageable pageable = PageRequest.of(page, size);
+
+    return tripRepository.findAll(pageable);
+  }
+
   public List<Trip> findByDate(String date) {
     LocalDate searchDate = LocalDate.parse(date);
     return findAll().stream().filter(trip -> trip.getTripDates().stream().anyMatch(date1 -> date1.getDate().equals(searchDate))).toList();
@@ -52,4 +61,7 @@ public class TripService {
     return tripRepository.findById(id);
   }
 
+  public void flush() {
+    tripRepository.flush();
+  }
 }

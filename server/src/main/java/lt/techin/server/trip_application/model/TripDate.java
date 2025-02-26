@@ -3,6 +3,7 @@ package lt.techin.server.trip_application.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,7 @@ public class TripDate {
   public TripDate(Trip trip, LocalDate date) {
     this.trip = trip;
     this.date = date;
-    this.userTrips = List.of();
+    this.userTrips = new ArrayList<>();
   }
 
   public TripDate() {
