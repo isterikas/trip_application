@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router";
 import Navbar from "./components/Navbar.tsx";
-import RegistrationForm from "./components/RegistrationForm.tsx";
 import { lazy, Suspense } from "react";
 import Footer from "./components/Footer.tsx";
 import MainPage from "./pages/MainPage.tsx";
@@ -8,6 +7,7 @@ import LoadingPage from "./pages/LoadingPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
 import TripRegistrationPage from "./pages/TripRegistrationPage.tsx";
 import RegistrationApproval from "./pages/RegistrationApproval.tsx";
+import TripCreationPage from "./pages/TripCreationPage.tsx";
 
 const LazyAboutUsPage = lazy(() => import("./pages/AboutUsPage.tsx"));
 const LazyItemsPage = lazy(() => import("./pages/ItemsPage.tsx"));
@@ -20,7 +20,7 @@ function App() {
     <>
       <div className="flex flex-col justify-between h-screen w-screen overflow-auto box-border">
         <Navbar />
-        <div className="flex-1 w-full">
+        <div className="flex-1 w-full flex flex-col justify-center items-center">
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route
@@ -52,7 +52,7 @@ function App() {
               path="/registration"
               element={
                 <Suspense fallback={<LoadingPage />}>
-                  <RegistrationForm />
+                  <TripCreationPage />
                 </Suspense>
               }
             />
@@ -72,8 +72,10 @@ function App() {
                 </Suspense>
               }
             />
-            <Route path="/registration-approval"
-              element={ <RegistrationApproval/>}/>
+            <Route
+              path="/registration-approval"
+              element={<RegistrationApproval />}
+            />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>

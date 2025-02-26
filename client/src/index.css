@@ -44,6 +44,10 @@ h1 {
   .body-bg {
     background-color: #646cff;
   }
+  .errors {
+    color: #ff0000;
+  }
+
   button {
     border-radius: 8px;
     border: 1px solid transparent;

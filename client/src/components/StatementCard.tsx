@@ -1,26 +1,21 @@
-import { Item } from "../context/ItemContext";
-import Button from "./Button";
-import { capitalizeFirstLetter } from "../lib/capitalizeFirstLetter";
-import { Link } from "react-router";
-
-function StatementCard({ entry }) {
-  const date = new Date(entry.date);
+function StatementCard({ item }) {
+  const date = new Date(item.date);
   const today = new Date();
   return (
     <>
       <div
-        key={entry.id}
-        className="m-3 p-2 rounded flex flex-col justify-center items-center bg-green-400"
+        key={item.id}
+        className="m-3 p-2 rounded flex flex-col justify-center items-center bg-[#1a8f70]"
       >
-        <p>{entry.name}</p>
-        <p>{entry.date}</p>
+        <p>{item.name}</p>
+        <p>{item.date}</p>
         {date < today ? (
           <>
-            <p>{entry.comment}</p>
-            <p>{entry.rating}</p>{" "}
+            <p>{item.comment}</p>
+            <p>{item.rating}</p>{" "}
           </>
         ) : (
-          <p>{entry.status}</p>
+          <p>{item.status}</p>
         )}
       </div>
     </>

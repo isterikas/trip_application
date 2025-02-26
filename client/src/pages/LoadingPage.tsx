@@ -1,5 +1,9 @@
 function LoadingPage() {
-  return <></>;
+  return (
+    <>
+      <p>Loading...</p>
+    </>
+  );
 }
 
 export default LoadingPage;

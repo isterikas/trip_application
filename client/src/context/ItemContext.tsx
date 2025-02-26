@@ -36,7 +36,6 @@ export function ItemProvider({ children }: { children: ReactNode }) {
     const fetchItems = async () => {
       try {
         const response = await axios.get(`${URL}/api/trips`);
-
         setItems(response.data);
       } catch (err) {
         setError("Failed to fetch items");

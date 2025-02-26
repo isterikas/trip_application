@@ -6,7 +6,7 @@ import StatementCard from "../components/StatementCard";
 
 function MyItemsPage() {
   const { user } = useAuth();
-  const [trips, setTrips] = useState([]);
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -20,25 +20,26 @@ function MyItemsPage() {
           },
         });
         console.log("Fetched trips:", response.data);
-        console.log(trips);
 
-        setTrips(response.data);
+        setItems(response.data);
       } catch (err) {
         setError(err.message);
       } finally {
         setLoading(false);
+        console.log(items);
       }
     };
 
     fetchTripDetails();
   }, []);
 
-  if (loading) return <p>Loading trip details...</p>;
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full">
-        {!error && trips.map((entry) => <StatementCard entry={entry} />)}
+        {!error &&
+          items.map((item) => <StatementCard key={item.id} item={item} />)}
         {error && <div>error</div>}
         {loading && <div>loading ...</div>}
       </div>

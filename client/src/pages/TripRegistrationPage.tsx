@@ -8,12 +8,12 @@ import { useAuth } from "../context/AuthContext";
 function TripRegistrationPage() {
   const { id } = useParams();
   const { user } = useAuth();
-  const [trips, setTrips] = useState([]);
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchTripDetails = async () => {
+    const fetchItemDetails = async () => {
       try {
         const response = await axios.get(`${URL}/api/trips/${id}`, {
           auth: {
@@ -22,7 +22,7 @@ function TripRegistrationPage() {
           },
         });
 
-        setTrips(response.data);
+        setItems(response.data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -30,17 +30,21 @@ function TripRegistrationPage() {
       }
     };
 
-    fetchTripDetails();
+    fetchItemDetails();
   }, [id]);
 
-  if (loading) return <p>Loading trip details...</p>;
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <>
       <div className="grid grid-cols-4">
-        {trips.map((tripDate) => (
-          <RegistrationCard tripDate={tripDate} setTrips={setTrips} />
+        {items.map((itemDate) => (
+          <RegistrationCard
+            key={itemDate.id}
+            itemDate={itemDate}
+            setItems={setItems}
+          />
         ))}
       </div>
     </>

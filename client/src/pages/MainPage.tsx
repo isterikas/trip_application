@@ -9,9 +9,9 @@ function MainPage() {
         experiences tailored to your unique preferences. Whether you're looking
         for exotic beach escapes, mountain adventures, or cultural explorations,
         we help you make memories that last a lifetime.
-        <h2>Why Choose Us?</h2>
         <ul>
           <li>
+            <h2>Why Choose Us?</h2>
             <span className="font-bold">Expert Recommendations:</span> With
             years of experience, we offer personalized travel recommendations
             for every type of traveler.

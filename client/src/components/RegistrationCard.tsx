@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
 import { useSnackbar } from "../context/SnackbarProvider";
 
-function RegistrationCard({ tripDate, setTrips }) {
+function RegistrationCard({ itemDate, setItems }) {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const { showSnackbar } = useSnackbar();
@@ -12,7 +12,7 @@ function RegistrationCard({ tripDate, setTrips }) {
   async function handleRegistration() {
     setLoading(true);
 
-    const response = await postRegistration(tripDate.id, user);
+    const response = await postRegistration(itemDate.id, user);
 
     if (!response.ok) {
       setLoading(false);
@@ -20,7 +20,7 @@ function RegistrationCard({ tripDate, setTrips }) {
       return;
     }
 
-    setTrips((prev) => prev.filter((trip) => trip.id !== response.data.id));
+    setItems((prev) => prev.filter((item) => item.id !== response.data.id));
     showSnackbar("Action successful", "success");
     setLoading(false);
   }

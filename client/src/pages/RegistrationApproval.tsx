@@ -6,7 +6,15 @@ import Button from "../components/Button";
 import { updateStatus } from "../lib/update";
 
 function RegistrationApproval() {
-  const [trips, setTrips] = useState([]);
+  interface ApprovalItem {
+    registrationId: number;
+    username: string;
+    tripName: string;
+    tripDate: Date;
+    currentlyBooked: number;
+  }
+
+  const [items, setItems] = useState<ApprovalItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -14,8 +22,7 @@ function RegistrationApproval() {
     const fetchTripDetails = async () => {
       try {
         const response = await axios.get(`${URL}/api/trips/pending`);
-        setTrips(response.data);
-        console.log(response.data);
+        setItems(response.data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -26,26 +33,29 @@ function RegistrationApproval() {
     fetchTripDetails();
   }, []);
 
-  if (loading) return <p>Loading trip details...</p>;
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   return (
     <>
       <div className="grid grid-cols-4">
-        {trips.map((request) => (
-          <div className="bg-green-400 m-3 p-2 flex flex-col">
-            <p>Trip name: {request.tripName}</p>
-            <p>Date: {request.tripDate}</p>
-            <p>Username: {request.username}</p>
-            <p>{request.currentlyBooked}/20</p>
+        {items.map((item) => (
+          <div
+            key={item.registrationId}
+            className="bg-[#1a8f70] m-3 p-5 flex flex-col rounded border-1 border-black"
+          >
+            <p>Trip name: {item.tripName}</p>
+            <p>Date: {item.tripDate.toString()}</p>
+            <p>Username: {item.username}</p>
+            <p>{item.currentlyBooked}/20</p>
             <Button
               buttonType={"registration"}
-              onClick={() => updateStatus(request.registrationId, "APPROVED")}
+              onClick={() => updateStatus(item.registrationId, "APPROVED")}
             >
               Approve
             </Button>
             <Button
               buttonType={"registration"}
-              onClick={() => updateStatus(request.registrationId, "REJECTED")}
+              onClick={() => updateStatus(item.registrationId, "REJECTED")}
             >
               Reject
             </Button>

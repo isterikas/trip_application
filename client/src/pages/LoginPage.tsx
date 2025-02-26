@@ -84,17 +84,11 @@ const LogInPage = () => {
                 onInput={() => setError("")}
               />
               <div className="relative">
-                <p className="error-text text-red absolute bottom-[1.15rem] left-[10.84rem] tablet:left-[14.44rem]">
-                  {errors.password?.message}
-                </p>
+                <p className="errors">{errors.password?.message}</p>
               </div>
               <div className="relative">
                 {/* Shows errors coming from error state */}
-                {error && (
-                  <p className="error-text text-red absolute pl-[1.06rem] top-[0.1rem]">
-                    {error}
-                  </p>
-                )}
+                {error && <p className="errors">{error}</p>}
               </div>
             </div>
 
