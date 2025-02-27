@@ -16,8 +16,7 @@
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
+  color: #fd9797;
   text-decoration: inherit;
 }
 a:hover {
@@ -33,19 +32,19 @@ body {
 } */
 
 h1 {
-  font-size: 3.2em;
+  font-size: 3em;
   line-height: 1.1;
 }
 
 @layer components {
   .main-bg {
-    background-color: #fe6c6c;
+    background-color: #da7b93;
   }
   .body-bg {
-    background-color: #646cff;
+    background-color: #2f4454;
   }
   .element-bg {
-    background-color: #1a8f70;
+    background-color: #376e6f;
   }
   .errors {
     color: #ff0000;
@@ -53,6 +52,7 @@ h1 {
 
   button {
     border-radius: 8px;
+    color: #1e2939;
     border: 1px solid transparent;
     padding: 0.6em 1.2em;
     font-size: 1em;
@@ -65,5 +65,43 @@ h1 {
   button:focus,
   button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
+  }
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @-webkit-keyframes rotate {
+    from {
+      -webkit-transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+
+  .load {
+    width: 50px;
+    height: 50px;
+    margin: 50px auto 0;
+    border: solid 10px #da7b93;
+    border-radius: 50%;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    -webkit-transition: all 0.5s ease-in;
+    -webkit-animation-name: rotate;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+
+    transition: all 0.5s ease-in;
+    animation-name: rotate;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
   }
 }

@@ -4,6 +4,7 @@ import { URL } from "../lib/constants";
 import axios from "axios";
 import RegistrationCard from "../components/RegistrationCard";
 import { useAuth } from "../context/AuthContext";
+import LoadingPage from "./LoadingPage";
 
 function TripRegistrationPage() {
   const { id } = useParams();
@@ -33,7 +34,7 @@ function TripRegistrationPage() {
     fetchItemDetails();
   }, [id]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingPage />;
   if (error) return <p>Error: {error}</p>;
 
   return (

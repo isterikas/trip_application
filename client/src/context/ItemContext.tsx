@@ -2,7 +2,6 @@ import React, { createContext, useState, useEffect, ReactNode } from "react";
 import axios from "axios";
 import { URL } from "../lib/constants";
 
-// Define item type interface
 export interface Item {
   id: number;
   name: string;
@@ -14,7 +13,6 @@ export interface Item {
   rating: number;
 }
 
-// Define context type
 interface ItemContextType {
   items: Item[];
   loading: boolean;
@@ -22,12 +20,10 @@ interface ItemContextType {
   setItems: Function;
 }
 
-// Create context with default values
 export const ItemContext = createContext<ItemContextType | undefined>(
   undefined
 );
 
-// Create provider component
 export function ItemProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -55,7 +51,6 @@ export function ItemProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Custom hook to use context
 export const useItemContext = () => {
   const context = React.useContext(ItemContext);
   if (!context) {

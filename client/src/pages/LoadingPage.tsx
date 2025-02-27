@@ -1,7 +1,8 @@
 function LoadingPage() {
   return (
     <>
-      <p>Loading...</p>
+      <h1>Loading</h1>
+      <div className="load"></div>
     </>
   );
 }

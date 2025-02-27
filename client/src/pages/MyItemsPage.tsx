@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import { URL } from "../lib/constants";
 import StatementCard from "../components/StatementCard";
+import LoadingPage from "./LoadingPage";
 
 function MyItemsPage() {
   const { user } = useAuth();
@@ -33,7 +34,7 @@ function MyItemsPage() {
     fetchTripDetails();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingPage />;
   if (error) return <p>Error: {error}</p>;
   return (
     <>

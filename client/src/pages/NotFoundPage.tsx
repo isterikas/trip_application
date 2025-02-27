@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import Button from "../components/Button";
 
 function NotFoundPage() {
   const navigate = useNavigate();
@@ -7,16 +8,16 @@ function NotFoundPage() {
     <>
       <div className="flex flex-col justify-center items-center my-16">
         <h1 className="uppercase font-bold text-5xl my-10">
-          404 page not found{" "}
+          404 page not found
         </h1>
-        <button
+        <Button
+          buttonType={"navlinks"}
           onClick={() => {
             navigate(-1);
           }}
-          className="buttons my-5"
         >
           Go back
-        </button>
+        </Button>
       </div>
     </>
   );

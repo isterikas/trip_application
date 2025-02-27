@@ -63,7 +63,7 @@ const RegistrationForm = ({ entry }) => {
           noValidate
           onSubmit={handleSubmit(formSubmitHandler)}
         >
-          <h1 className="text-2xl my-2">Trip registration form:</h1>
+          <h1 className="text-xl my-2">Trip registration form:</h1>
 
           <input
             className="my-2 p-1 border-1 border-black rounded"

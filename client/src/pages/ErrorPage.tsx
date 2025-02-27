@@ -1,7 +1,7 @@
 function ErrorPage() {
   return (
     <>
-        <p>Error</p>
+      <p className="text-red-500">Error</p>
     </>
   );
 }

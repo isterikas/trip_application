@@ -18,7 +18,7 @@ const LazySignUpPage = lazy(() => import("./pages/SignUpPage.tsx"));
 function App() {
   return (
     <>
-      <div className="flex flex-col justify-between h-screen w-screen overflow-auto box-border">
+      <div className="flex flex-col justify-between h-screen w-screen overflow-auto box-border body-bg">
         <Navbar />
         <div className="flex-1 w-full flex flex-col justify-center items-center">
           <Routes>
@@ -76,6 +76,7 @@ function App() {
               path="/registration-approval"
               element={<RegistrationApproval />}
             />
+            <Route path="/loading" element={<LoadingPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </div>

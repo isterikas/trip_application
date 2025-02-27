@@ -3,14 +3,10 @@ function Button({ buttonType, onClick, children, loading }) {
     <button
       disabled={loading}
       onClick={onClick}
-      className={`shadow-sm ${
-        buttonType === "navlinks"
-          ? "m-2 bg-[#fd9797] text-gray-800 hover:bg-[#ccdfcb] font-bold"
-          : ""
-      } ${
-        buttonType === "registration"
-          ? "m-2 bg-[#92c7b4] text-gray-800 hover:bg-[#ccdfcb]"
-          : ""
+      className={`hover:bg-[#1c3334] hover:text-white shadow-sm ${
+        buttonType === "navlinks" && "m-2 bg-[#fd9797] font-bold"
+      } ${buttonType === "registration" && "m-2 bg-[#92c7b4]"} ${
+        buttonType === "menu" && "m-2 bg-[#c7bb92] w-9/10"
       }
       ${loading && "cursor-not-allowed opacity-50"}`}
     >

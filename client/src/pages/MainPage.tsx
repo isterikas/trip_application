@@ -3,7 +3,7 @@ import Header from "./Header";
 function MainPage() {
   return (
     <>
-      <h1 className="text-red-500">Welcome to TechinTravel!</h1>
+      <h1>Welcome to TechinTravel!</h1>
       <p>
         Your journey begins with us, where we give you the best travel
         experiences tailored to your unique preferences. Whether you're looking

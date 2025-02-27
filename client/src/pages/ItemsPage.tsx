@@ -11,8 +11,6 @@ function ItemsPage() {
           items.map((item) => (
             <ItemCard item={item} setItems={setItems} key={item.id} />
           ))}
-        {error && <div>error</div>}
-        {loading && <div>loading ...</div>}
       </div>
     </>
   );
